@@ -1,29 +1,57 @@
+import { useState } from 'react';
+
 // Defining possible turns.
 const TURNS = {
   X: 'x',
   O: 'o',
 };
 
-// This const will draw the board, its a 9-position array
-const board = Array(9).fill(null);
-
 // Individual square of the board
-const Square = ({ children, updateBoard, index }) => {
-  return <div className="square">{children}</div>;
+const Square = ({ children, isSelected, updateBoard, index }) => {
+  const handleClick = () => {
+    updateBoard();
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      className={`square ${isSelected ? 'is-selected' : ''}`}
+    >
+      {children}
+    </div>
+  );
 };
 
 function App() {
+  // State to create board selection.
+  const [board, setBoard] = useState(Array(9).fill(null));
+
+  // State to store turn.
+  const [turn, setTurn] = useState(TURNS.X);
+
+  // Function for updating board.
+  const updateBoard = () => {};
+
   return (
     <main className="board">
       <h1>Tic Tac Toe</h1>
+
       <section className="game">
         {board.map((_, index) => {
           return (
-            <Square key={index} index={index}>
-              {index}
-            </Square>
+            <Square
+              key={index}
+              index={index}
+              updateBoard={updateBoard}
+            ></Square>
           );
         })}
+      </section>
+
+      <section className="turn">
+        <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
+
+        <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
     </main>
   );

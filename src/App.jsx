@@ -9,7 +9,7 @@ const TURNS = {
 // Individual square of the board
 const Square = ({ children, isSelected, updateBoard, index }) => {
   const handleClick = () => {
-    updateBoard();
+    updateBoard(index);
   };
 
   return (
@@ -29,9 +29,27 @@ function App() {
   // State to store turn.
   const [turn, setTurn] = useState(TURNS.X);
 
+  // State to detect if the board is full.
+  // null - no winner.
+  // false - tie.
+  const [winner, setWinner] = useState(null);
+
   // Function for updating board.
-  const updateBoard = () => {
+  const updateBoard = (index) => {
+    // If there is a element in the index, we just return, so
+    // we dont overwrite values.
+    if (board[index]) return;
+
+    // Updating Board, getting previous board.
+    const newBoard = [...board];
+    // Assigning to index the current turn.
+    newBoard[index] = turn;
+    // Updating board state.
+    setBoard((prevBoard) => newBoard);
+
+    // Updating turn state.
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
+    setTurn((prevTurn) => newTurn);
   };
 
   return (
@@ -41,11 +59,9 @@ function App() {
       <section className="game">
         {board.map((_, index) => {
           return (
-            <Square
-              key={index}
-              index={index}
-              updateBoard={updateBoard}
-            ></Square>
+            <Square key={index} index={index} updateBoard={updateBoard}>
+              {board[index]}
+            </Square>
           );
         })}
       </section>

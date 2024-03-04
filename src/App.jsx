@@ -6,6 +6,18 @@ const TURNS = {
   O: 'o',
 };
 
+//  Defining possible position in order to win.
+const WINNER_COMBOS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [3, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
 // Individual square of the board
 const Square = ({ children, isSelected, updateBoard, index }) => {
   const handleClick = () => {
@@ -34,11 +46,28 @@ function App() {
   // false - tie.
   const [winner, setWinner] = useState(null);
 
+  // Function to validate winner.
+  const checkWinner = (boardToCheck) => {
+    for (const combo of WINNER_COMBOS) {
+      const [a, b, c] = combo;
+      if (
+        boardToCheck[a] &&
+        boardToCheck[a] === boardToCheck[b] &&
+        boardToCheck[a] === boardToCheck[c]
+      ) {
+        return boardToCheck[a];
+      }
+    }
+
+    // If no matches then no winner.
+    return null;
+  };
+
   // Function for updating board.
   const updateBoard = (index) => {
-    // If there is a element in the index, we just return, so
+    // If there is a element in the index or already a winner, we just return, so
     // we dont overwrite values.
-    if (board[index]) return;
+    if (board[index] || winner) return;
 
     // Updating Board, getting previous board.
     const newBoard = [...board];
@@ -50,6 +79,12 @@ function App() {
     // Updating turn state.
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn((prevTurn) => newTurn);
+
+    // Checking if there is a new winner after updating board.
+    const isWinner = checkWinner(newBoard);
+    if (isWinner) {
+      setWinner((prevVal) => isWinner);
+    }
   };
 
   return (

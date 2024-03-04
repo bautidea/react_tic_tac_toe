@@ -13,7 +13,7 @@ const WINNER_COMBOS = [
   [6, 7, 8],
   [0, 3, 6],
   [1, 4, 7],
-  [3, 5, 8],
+  [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6],
 ];
@@ -63,6 +63,11 @@ function App() {
     return null;
   };
 
+  const checkEndGame = (boardToCheck) => {
+    // If there are no free spaces on board then its a tie.
+    return boardToCheck.every((square) => square !== null);
+  };
+
   // Function for updating board.
   const updateBoard = (index) => {
     // If there is a element in the index or already a winner, we just return, so
@@ -84,7 +89,9 @@ function App() {
     const isWinner = checkWinner(newBoard);
     if (isWinner) {
       setWinner((prevVal) => isWinner);
-    } // TODO: Check if game is over
+    } else if (checkEndGame(newBoard)) {
+      setWinner((prevVal) => false);
+    }
   };
 
   const resetGame = () => {
@@ -100,10 +107,10 @@ function App() {
       <button onClick={resetGame}>Game Restart</button>
 
       <section className="game">
-        {board.map((_, index) => {
+        {board.map((square, index) => {
           return (
             <Square key={index} index={index} updateBoard={updateBoard}>
-              {board[index]}
+              {square}
             </Square>
           );
         })}
@@ -118,11 +125,13 @@ function App() {
       {winner !== null && (
         <section className="winner">
           <div className="text">
-            <h2>{winner === false ? 'Tie' : `Won:`}</h2>
+            <h2>{winner === false ? 'Tie' : `Winner`}</h2>
 
-            <header className="win">
-              {winner && <Square>{winner}</Square>}
-            </header>
+            {winner && (
+              <header className="win">
+                <Square>{winner}</Square>
+              </header>
+            )}
 
             <footer>
               <button onClick={resetGame}>Start Over?</button>

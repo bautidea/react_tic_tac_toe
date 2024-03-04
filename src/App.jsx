@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import confetti from 'canvas-confetti';
 
 // Defining possible turns.
 const TURNS = {
@@ -88,6 +89,7 @@ function App() {
     // Checking if there is a new winner after updating board.
     const isWinner = checkWinner(newBoard);
     if (isWinner) {
+      confetti();
       setWinner((prevVal) => isWinner);
     } else if (checkEndGame(newBoard)) {
       setWinner((prevVal) => false);

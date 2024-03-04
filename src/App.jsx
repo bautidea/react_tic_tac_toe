@@ -84,12 +84,20 @@ function App() {
     const isWinner = checkWinner(newBoard);
     if (isWinner) {
       setWinner((prevVal) => isWinner);
-    }
+    } // TODO: Check if game is over
+  };
+
+  const resetGame = () => {
+    setBoard((prevBoard) => Array(9).fill(null));
+    setTurn((prevTurn) => TURNS.X);
+    setWinner((prevValue) => null);
   };
 
   return (
     <main className="board">
       <h1>Tic Tac Toe</h1>
+
+      <button onClick={resetGame}>Game Restart</button>
 
       <section className="game">
         {board.map((_, index) => {
@@ -106,6 +114,22 @@ function App() {
 
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      {winner !== null && (
+        <section className="winner">
+          <div className="text">
+            <h2>{winner === false ? 'Tie' : `Won:`}</h2>
+
+            <header className="win">
+              {winner && <Square>{winner}</Square>}
+            </header>
+
+            <footer>
+              <button onClick={resetGame}>Start Over?</button>
+            </footer>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import confetti from 'canvas-confetti';
+import Square from './components/Square';
 
 // Defining possible turns.
 const TURNS = {
@@ -18,22 +19,6 @@ const WINNER_COMBOS = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-
-// Individual square of the board
-const Square = ({ children, isSelected, updateBoard, index }) => {
-  const handleClick = () => {
-    updateBoard(index);
-  };
-
-  return (
-    <div
-      onClick={handleClick}
-      className={`square ${isSelected ? 'is-selected' : ''}`}
-    >
-      {children}
-    </div>
-  );
-};
 
 function App() {
   // State to create board selection.

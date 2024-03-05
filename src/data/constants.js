@@ -1,7 +1,7 @@
 // Defining possible turns.
 export const TURNS = {
-  X: 'x',
-  O: 'o',
+  X: '❌',
+  O: '⚪',
 };
 
 //  Defining possible position in order to win.

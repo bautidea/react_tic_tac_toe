@@ -21,3 +21,13 @@ export const checkEndGame = (boardToCheck) => {
   // If there are no free spaces on board then its a tie.
   return boardToCheck.every((square) => square !== null);
 };
+
+export const saveToLocalStorage = (boardToSave, turnToSave) => {
+  window.localStorage.setItem('board', JSON.stringify(boardToSave));
+  window.localStorage.setItem('turn', turnToSave);
+};
+
+export const removeFromLocalStorage = () => {
+  window.localStorage.removeItem('board');
+  window.localStorage.removeItem('turn');
+};

@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti';
 import Square from './components/Square';
 import { TURNS } from './data/constants';
 import { checkWinner, checkEndGame } from './logic/board';
+import Winner from './components/Winner';
 
 function App() {
   // State to create board selection.
@@ -71,23 +72,7 @@ function App() {
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
 
-      {winner !== null && (
-        <section className="winner">
-          <div className="text">
-            <h2>{winner === false ? 'Tie' : `Winner`}</h2>
-
-            {winner && (
-              <header className="win">
-                <Square>{winner}</Square>
-              </header>
-            )}
-
-            <footer>
-              <button onClick={resetGame}>Start Over?</button>
-            </footer>
-          </div>
-        </section>
-      )}
+      <Winner winner={winner} resetGame={resetGame} />
     </main>
   );
 }

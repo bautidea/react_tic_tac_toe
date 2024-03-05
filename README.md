@@ -1,8 +1,8 @@
 # Tic Tac Toe
 
-<div align='center' display='flex' flex-direction='row' width='100%' >
-<img src='./src/assets/git_game.PNG' width='45%' >
-<img src='./src/assets/git_game_finish.PNG' width='45%' >
+<div align='center' display='flex' flex-direction='row' width='100%'>
+<img src='./src/assets/git_game.PNG' width='35%' >
+<img src='./src/assets/git_game_finish.PNG' width='40.4%' >
 </div>
 
 This is a simple game developed with React + JavaScript. This game
